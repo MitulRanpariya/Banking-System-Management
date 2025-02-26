@@ -61,7 +61,7 @@ The **Banking System Database** consists of multiple relational tables for manag
 
 ---
 
-## 🏢 Security & Authentication
+## 🏢 Authentication
 
 - Bank employees access the system using **secure login credentials**.
 - ATM PIN updates require **email verification**.
@@ -78,20 +78,19 @@ cd Bank-Atm_Management
 ```
 
 ### 2️⃣ **Configure Database**
-Update `application.properties` with **MySQL credentials**:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/banking_system
-spring.datasource.username=root
-spring.datasource.password=yourpassword
-spring.jpa.hibernate.ddl-auto=update
+Update the database connection details in your **Java code**:
+```java
+String url = "jdbc:mysql://localhost:3306/banking_system";
+String user = "root";
+String password = "yourpassword";
 ```
 
 ### 3️⃣ **Run the Application**
+Compile and run the Java program:
 ```sh
-mvn clean install
-mvn spring-boot:run
+javac Main.java
+java Main
 ```
-🚀 **Application runs at** `http://localhost:8080/`
 
 ---
 
@@ -108,5 +107,4 @@ mvn spring-boot:run
 Contributions are welcome! Feel free to **fork**, create a **pull request**, or open an **issue**.
 
 ---
-
 
