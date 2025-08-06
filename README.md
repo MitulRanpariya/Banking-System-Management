@@ -1,110 +1,145 @@
-# Digital Banking System
 
-A robust and secure digital banking system built using **Spring Boot**, providing a range of banking operations through clean and efficient RESTful APIs.
+# 💰 Digital Banking System
+
+A robust and secure digital banking system built using Spring Boot, providing a range of banking operations through clean and efficient RESTful APIs.
+
+---
 
 ## ✨ Features
 
-* 🔐 Secure Authentication & Authorization (JWT-based)
-* 👤 User and Account Management
-* 💼 Wallet and Fund Transfers
-* 📇 Beneficiary Handling
-* 🧾 Bill Payments
-* 📈 Transaction History
-* ⚡ Real-time Balance Updates
+- 🔐 **Secure Authentication & Authorization** (JWT-based)
+- 👤 **User and Account Management**
+- 💼 **Wallet and Fund Transfers**
+- 📇 **Beneficiary Handling**
+- 🧾 **Bill Payments**
+- 📈 **Transaction History**
+- ⚡ **Real-time Balance Updates**
+
+---
 
 ## 💪 Tech Stack
 
-* **Backend Framework:** Spring Boot
-* **Security:** Spring Security with JWT
-* **ORM:** Spring Data JPA (Hibernate)
-* **Database:** PostgreSQL
-* **Build Tool:** Maven
-* **Testing:** Postman / Unit Testing (Optional)
+- **Backend Framework**: Spring Boot  
+- **Security**: Spring Security with JWT  
+- **ORM**: Spring Data JPA (Hibernate)  
+- **Database**: PostgreSQL  
+- **Build Tool**: Maven  
+- **Testing**: Postman / Unit Testing (Optional)
+
+---
 
 ## 📌 Prerequisites
 
-* Java 17 or higher
-* Maven
-* PostgreSQL Server
+- Java 17 or higher  
+- Maven  
+- PostgreSQL Server
+
+---
 
 ## 🔧 Setup & Installation
 
-1. **Clone the repository**
+### 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/yourusername/Digital-Banking-System.git
-   cd Digital-Banking-System
-   ```
+```bash
+git clone https://github.com/yourusername/Digital-Banking-System.git
+cd Digital-Banking-System
+```
 
-2. **Configure the database**
+### 2. Configure the database
 
-   * Open `src/main/resources/application.properties`
-   * Replace the database credentials with your own:
+Edit `src/main/resources/application.properties`:
 
-     ```properties
-      spring.datasource.url=jdbc:postgresql://localhost:5432/your_db_name
-      spring.datasource.username=your_username
-      spring.datasource.password=your_password
-     ```
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_db_name
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+```
 
-3. **Build the project**
+### 3. Build the project
 
-   ```bash
-   mvn clean install
-   ```
+```bash
+mvn clean install
+```
 
-4. **Run the application**
+### 4. Run the application
 
-   ```bash
-   mvn spring-boot:run
-   ```
+```bash
+mvn spring-boot:run
+```
 
-5. The application will be live at:
-   [http://localhost:8080](http://localhost:8080)
+- The application will run at: [http://localhost:8080](http://localhost:8080)
 
 ---
 
 ## 📨 API Endpoints
 
-### 🔑 Authentication
+### 🔑 Authentication (`/auth`)
 
-* `POST /api/auth/login` – User login
-* `POST /api/auth/refresh` – Refresh JWT token
+| Method | Endpoint               | Description                          |
+|--------|------------------------|--------------------------------------|
+| POST   | `/auth/register`       | Register a new customer              |
+| POST   | `/auth/login`          | User login                           |
+| POST   | `/auth/refresh`        | Refresh a JWT token                  |
+| POST   | `/auth/logout`         | Logout (stateless, client-side)      |
+| DELETE | `/auth/delete`         | Delete customer and all data         |
 
-### 🧝 Account Management
+---
 
-* `POST /api/accounts` – Create account
-* `GET /api/accounts/{id}` – Get account by ID
-* `PUT /api/accounts/{id}` – Update account
+### 🧝 Account Management (`/customers/account`, `/customers`)
 
-### 💳 Wallet Operations
+| Method | Endpoint                                      | Description                                 |
+|--------|-----------------------------------------------|---------------------------------------------|
+| POST   | `/customers/account`                          | Add a new account                           |
+| DELETE | `/customers/account`                          | Delete an account                           |
+| GET    | `/customers/account?walletId={id}`            | View all accounts (by wallet ID)            |
+| POST   | `/customers/account/deposit`                  | Deposit into an account                     |
+| POST   | `/customers/account/transferToWallet`         | Account → Wallet transfer                   |
+| POST   | `/customers/account/transferBetweenAccounts`  | Transfer between customer’s own accounts    |
+| POST   | `/customers/account/transferToOtherCustomerAccount` | Transfer to another customer's account |
+| POST   | `/customers/account/transferToBeneficiary`    | Account → Beneficiary transfer              |
 
-* `GET /api/wallets/{id}` – Wallet details
-* `POST /api/wallets/transfer` – Transfer money
+---
 
-### 🧾 Transactions
+### 💳 Wallet Operations (`/customers/wallet`)
 
-* `GET /api/transactions/customer/{cid}` – Get all transactions of customer
-* `GET /api/transactions/{tid}` – Get single transaction detail
+| Method | Endpoint                                      | Description                         |
+|--------|-----------------------------------------------|-------------------------------------|
+| GET    | `/customers/wallet/balance`                   | View wallet balance + customer info |
+| POST   | `/customers/wallet/transferToAccount`         | Wallet → Customer’s Account         |
+| POST   | `/customers/wallet/transferToBeneficiary`     | Wallet → Beneficiary transfer       |
 
-### 👥 Beneficiaries
+---
 
-* `POST /api/beneficiaries` – Add beneficiary
-* `GET /api/beneficiaries/customer/{cid}` – Get all beneficiaries of customer
-* `DELETE /api/beneficiaries/{bid}` – Delete a beneficiary
+### 🧾 Transactions (`/customers/transactions`)
 
-### 👤 Customers
+| Method | Endpoint                       | Description                              |
+|--------|--------------------------------|------------------------------------------|
+| GET    | `/customers/transactions`      | Get all transactions of logged-in user   |
 
-* `POST /api/customers/register` – Register new customer
-* `GET /api/customers/{cid}` – View profile
-* `PUT /api/customers/{cid}` – Update profile
-* `DELETE /api/customers/{cid}` – Delete account
+---
+
+### 👥 Beneficiaries (`/customers/beneficiaries`)
+
+| Method | Endpoint                                      | Description                   |
+|--------|-----------------------------------------------|-------------------------------|
+| POST   | `/customers/beneficiaries`                    | Add a new beneficiary         |
+| GET    | `/customers/beneficiaries`                    | Get all beneficiaries         |
+| DELETE | `/customers/beneficiaries/{beneficiaryId}`    | Delete a beneficiary by ID    |
+
+---
+
+### 💵 Bill Payments (`/payments/bills`)
+
+| Method | Endpoint              | Description                            |
+|--------|-----------------------|----------------------------------------|
+| POST   | `/payments/bills`     | Add a new bill payment                 |
+| GET    | `/payments/bills`     | View bill payments for the user       |
 
 ---
 
 ## 📘 Sample JSONs
 
-### ✅ Register Customer (POST `/api/customers/register`)
+### ✅ Register Customer (POST `/auth/register`)
 
 ```json
 {
@@ -117,7 +152,9 @@ A robust and secure digital banking system built using **Spring Boot**, providin
 }
 ```
 
-### 🔐 Login DTO (POST `/api/auth/login`)
+---
+
+### 🔐 Login DTO (POST `/auth/login`)
 
 ```json
 {
@@ -128,7 +165,6 @@ A robust and secure digital banking system built using **Spring Boot**, providin
 
 ---
 
-
 ## 📜 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source and available under the **MIT License**.
